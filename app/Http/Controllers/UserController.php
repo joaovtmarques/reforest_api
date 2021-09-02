@@ -153,7 +153,9 @@ class UserController extends Controller
             'name' => 'min:2',
             'email' => 'email|unique:users',
             'password' => 'same:password_confirm',
-            'password_confirm' => 'same:password'
+            'password_confirm' => 'same:password',
+            'bio' => 'required:null',
+            'avatar' => 'required:null',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -167,6 +169,8 @@ class UserController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $password_confirm = $request->input('password_confirm');
+        $bio = $request->input('bio');
+        $avatar = $request->input('avatar');
 
         $user = User::find($this->loggedUser->id);
 
@@ -178,6 +182,15 @@ class UserController extends Controller
         }
         if($password) {
             $user->password = password_hash($password, PASSWORD_DEFAULT);
+        }
+        if($password) {
+            $user->password = password_hash($password, PASSWORD_DEFAULT);
+        }
+        if($bio) {
+            $user->bio = $bio;
+        }
+        if($avatar) {
+            $user->avatar = $avatar;
         }
 
         $user->save();
