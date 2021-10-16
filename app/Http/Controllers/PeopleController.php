@@ -26,7 +26,7 @@ class PeopleController extends Controller
 
         $id_people = $request->input('id_people');
 
-        $results = People::find(['id_people', $id_people]);
+        $results = People::find($id_people);
 
         if($results) {
             $peopleInfo = User::select('name', 'bio', 'avatar', 'cover')
