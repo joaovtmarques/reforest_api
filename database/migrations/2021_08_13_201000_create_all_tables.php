@@ -19,9 +19,15 @@ class CreateAllTables extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('bio')->nullable();
-            $table->string('avatar')->default('default.png');
+            $table->string('avatar')->default('https://res.cloudinary.com/dceutjord/image/upload/v1632783473/default_uummgx.png');
+            $table->string('cover')->default('https://res.cloudinary.com/dceutjord/image/upload/v1634338253/capa-facebook-euzaria-gratidao_rl1frj.png');
             $table->string('permission')->default('user');
             $table->timestamps();
+        });
+        Schema::create('people', function (Blueprint $table) {
+            $table->id();
+            $table->integer('id_user');
+            $table->integer('id_people');
         });
         Schema::create('greencredits', function (Blueprint $table) {
             $table->id();

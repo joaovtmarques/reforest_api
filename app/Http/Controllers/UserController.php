@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Post;
+use App\Models\People;
 use App\Models\GreenCredit;
 use App\Models\GreenPoint;
 use App\Models\Exchange;
@@ -194,6 +195,53 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        return $array;
+    }
+
+    public function togglePeople(Request $request) {
+        $array = ['error'=>''];
+
+        $id_people = $request->input('people');
+
+        $people = User::find($id_people);
+
+        if($people) {
+            $follow = People::select()
+                ->where('id_user', $this->loggedUser->id)
+                ->where('id_people', $id_people)
+                ->first();
+
+            if($follow) {
+                $follow->delete();
+                $array['have'] = false;
+            } else {
+                $newFollow = new People();
+                $newFollow->id_user = $this->loggedUser->id;
+                $newFollow->id_people = $id_people;
+                $newFollow->save();
+                $array['have'] = true;
+            }
+        } else {
+            $array['error'] = 'Pessoa inexistente';
+        }
+
+        return $array;
+    }
+
+    public function getPeople() {
+        $array = ['error'=>'', 'list'=>[]];
+
+        $people = People::select()
+            ->where('id_user', $this->loggedUser->id)
+            ->get();
+        
+        if($people) {
+            foreach($people as $person) {
+                $follow = People::find($people['id_people']);
+                $array['list'][] = $follow;
+            }
+        }
 
         return $array;
     }

@@ -114,8 +114,8 @@ class AwardController extends Controller
                 $newExchange->id_award = $id;
                 $newExchange->save();
 
-                $infoExists = Information::find($id_user)->count();
-                if(!$infoExists >= 1) {
+                $infoExists = Information::find($id_user);
+                if(!$infoExists) {
                     $newInformation = new Information();
                     $newInformation->id_user = $id_user;
                     $newInformation->street = $street;

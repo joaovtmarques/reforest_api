@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GreenPointController;
 use App\Http\Controllers\PostController;
@@ -24,6 +25,9 @@ use App\Http\Controllers\MissionController;
 /* feito */ Route::get('/user', [UserController::class, 'read']); // rota de ver usuário
 /* feito */ Route::put('/user', [UserController::class, 'update']); // rota de editar usuário
 
+/* feito */ Route::get('/user/people', [UserController::class, 'getPeople']); // rota de ver pessoas que segue
+/* feito */ Route::post('/user/people', [UserController::class, 'togglePeople']); // rota de seguir uma nova pessoa
+
 /* feito */ Route::get('/user/favorites', [UserController::class, 'getFavorites']); // rota de ver pv's favoritos
 /* feito */ Route::post('/user/favorite', [UserController::class, 'toggleFavorite']); // rota de adicionar pv's favoritos
 
@@ -31,6 +35,8 @@ use App\Http\Controllers\MissionController;
 /* feito */ Route::post('/user/posts', [UserController::class, 'addPost']); // rota de criar um novo post
 
 /* feito */ Route::get('/user/exchanges', [UserController::class, 'getExchanges']); // rota de listar trocas feitas pelo usuário
+
+Route::get('/people', [PeopleController::class, 'getPeople']); // rota para listar as informações de uma perfil
 
 /* feito */ Route::get('/posts', [PostController::class, 'getAllPosts']); // rota de ver todos os posts (tela inicial)
 /* feito */ Route::get('/post/{id}', [PostController::class, 'getOnePost']); // rota de listar um post específico
@@ -47,7 +53,7 @@ use App\Http\Controllers\MissionController;
 
 /* feito */ Route::get('/missions', [MissionController::class, 'getMissions']); // rota de ver missões
 /* feito */ Route::post('/mission/{id}', [MissionController::class, 'completeMission']); // rota de completar missão
-/* feito */ Route::post('/mission', [MissionController::class, 'addMission']); // rota de completar missão
+/* feito */ Route::post('/mission', [MissionController::class, 'addMission']); // rota de adicionar uma missão
 
 /* feito (falta permissão */ Route::post('/awards', [AwardController::class, 'addAwards']); // rota de adcionar um prêmio
 /* feito */ Route::get('/awards', [AwardController::class, 'getAwards']); // rota de listar prêmios
