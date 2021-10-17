@@ -41,13 +41,13 @@ class AuthController extends Controller
                 $newUser->password = $hash;
                 $newUser->save();
 
-                for($i = 1; $i<=3; $i++){
-                    $newInfoMission = new InfoMission();
-                    $newInfoMission->id_user = $newUser->id;
-                    $newInfoMission->id_mission = $i;
-                    $newInfoMission->complete = 0;
-                    $newInfoMission->save();
-                }
+                // for($i = 1; $i<=3; $i++){
+                //     $newInfoMission = new InfoMission();
+                //     $newInfoMission->id_user = $newUser->id;
+                //     $newInfoMission->id_mission = $i;
+                //     $newInfoMission->complete = 0;
+                //     $newInfoMission->save();
+                // }
 
                 $newGreenCredit = new GreenCredit();
                 $newGreenCredit->id_user = $newUser->id;
