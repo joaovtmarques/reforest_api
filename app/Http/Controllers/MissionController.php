@@ -38,7 +38,7 @@ class MissionController extends Controller
     public function completeMission($id) {
         $array = ['error' => ''];
 
-        $mission = InfoMission::select('id_mission')->where('id_mission', $id)->get();
+        $mission = InfoMission::find('id_mission', $id);
 
         if($mission) {
             $id_user = $this->loggedUser['id'];
@@ -47,7 +47,7 @@ class MissionController extends Controller
             
             if($mis[0]{"complete"} === 0) {
                 InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
-                    ->update(['complete' => true]);
+                    ->update(['complete' => 1]);
 
                 $award = Mission::select('award_value')->where('id', $id)->get();
                 $gc = $award[0]{"award_value"};
@@ -68,7 +68,7 @@ class MissionController extends Controller
             return $array;
         }
 
-        return $array;
+        return $mission;
     }
 
     public function addMission(Request $request) {

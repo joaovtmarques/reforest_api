@@ -45,7 +45,7 @@ class AuthController extends Controller
                     $newInfoMission = new InfoMission();
                     $newInfoMission->id_user = $newUser->id;
                     $newInfoMission->id_mission = $i;
-                    $newInfoMission->complete = false;
+                    $newInfoMission->complete = 0;
                     $newInfoMission->save();
                 }
 
