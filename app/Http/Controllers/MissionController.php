@@ -38,7 +38,7 @@ class MissionController extends Controller
     public function completeMission($id) {
         $array = ['error' => ''];
 
-        $mission = InfoMission::find('id_mission', $id);
+        $mission = InfoMission::select()->where('id_mission', $id)->get();
 
         if($mission) {
             $id_user = $this->loggedUser['id'];
