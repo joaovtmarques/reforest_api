@@ -43,45 +43,45 @@ class MissionController extends Controller
 
         if($mission) {
             $mis = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
-            if($mis) {
-                if($mis[0]{"complete"} === false) {
-                    InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
-                        ->update(['complete' => true]);
+            // if($mis) {
+            //     if($mis[0]{"complete"} === false) {
+            //         InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
+            //             ->update(['complete' => true]);
             
-                    $award = Mission::select('award_value')->where('id', $id)->get();
-                    $gc = $award[0]{"award_value"};
+            //         $award = Mission::select('award_value')->where('id', $id)->get();
+            //         $gc = $award[0]{"award_value"};
 
-                    $newGc = GreenCredit::find($this->loggedUser->id);
-                    $newGc->amountgc = $newGc->amountgc + $gc;
-                    $newGc->save();
+            //         $newGc = GreenCredit::find($this->loggedUser->id);
+            //         $newGc->amountgc = $newGc->amountgc + $gc;
+            //         $newGc->save();
                 
-                    $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+            //         $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
 
-                    $array['data'] = $completeMission;
-                } else {
-                    $array['error'] = 'Missão já completa';
-                    return $array;
-                }
-            } else {
-                $newMission = new InfoMission();
-                $newMission->id_user = $id_user;
-                $newMission->id_mission = $id;
-                $newMission->complete = false;
-                $newMission->save();
+            //         $array['data'] = $completeMission;
+            //     } else {
+            //         $array['error'] = 'Missão já completada';
+            //         return $array;
+            //     }
+            // } else {
+            //     $newMission = new InfoMission();
+            //     $newMission->id_user = $id_user;
+            //     $newMission->id_mission = $id;
+            //     $newMission->complete = false;
+            //     $newMission->save();
 
-                InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
-                    ->update(['complete' => true]);
+            //     InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
+            //         ->update(['complete' => true]);
             
-                $award = Mission::select('award_value')->where('id', $id)->get();
-                $gc = $award[0]{"award_value"};
+            //     $award = Mission::select('award_value')->where('id', $id)->get();
+            //     $gc = $award[0]{"award_value"};
 
-                $newGc = GreenCredit::find($this->loggedUser->id);
-                $newGc->amountgc = $newGc->amountgc + $gc;
-                $newGc->save();
+            //     $newGc = GreenCredit::find($this->loggedUser->id);
+            //     $newGc->amountgc = $newGc->amountgc + $gc;
+            //     $newGc->save();
             
-                $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+            //     $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
 
-                $array['data'] = $completeMission;
+                $array['data'] = $mis;
             }
         } else {
             $array['error'] = 'Missão não existente';
