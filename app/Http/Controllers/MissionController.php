@@ -66,14 +66,20 @@ class MissionController extends Controller
                 $newInfoMission->id_mission = $id;
                 $newInfoMission->complete = false;
                 $newInfoMission->save();
-                // $array['error'] = "Essa info missão não existe";
 
-                InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
+                $completeMission = InfoMission::select('complete')->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+
+                if($completeMission === false) {
+                    InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
                     ->update(['complete' => true]);
 
-                $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+                    $compleMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
 
-                $array['data'] = $completeMission;
+                    $array['data'] = $compleMission;
+                } else {
+                    $array['error'] = "Essa missão já esta completa ";
+                    return $array;
+                }
                 return $array;
             }
             $array['error'] = 'achouu';
