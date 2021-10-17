@@ -42,7 +42,7 @@ class MissionController extends Controller
         $mission = Mission::select()->where('id', $id)->get();
 
         if($mission) {
-            $mis = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+            $mis = InfoMission::select("complete")->where(['id_user' => $id_user, 'id_mission' => $id])->get();
             if(!$mis) {
                 $newMission = new InfoMission();
                 $newMission->id_user = $id_user;
@@ -64,26 +64,26 @@ class MissionController extends Controller
 
                 $array['data'] = $completeMission;
             } else {
-                // if($mis[0]{"complete"} === false) {
-                //     InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
-                //         ->update(['complete' => true]);
+                if($mis === false) {
+                    InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
+                        ->update(['complete' => true]);
             
-                //     $award = Mission::select('award_value')->where('id', $id)->get();
-                //     $gc = $award[0]{"award_value"};
+                    $award = Mission::select('award_value')->where('id', $id)->get();
+                    $gc = $award[0]{"award_value"};
 
-                //     $newGc = GreenCredit::find($this->loggedUser->id);
-                //     $newGc->amountgc = $newGc->amountgc + $gc;
-                //     $newGc->save();
+                    $newGc = GreenCredit::find($this->loggedUser->id);
+                    $newGc->amountgc = $newGc->amountgc + $gc;
+                    $newGc->save();
                 
-                //     $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+                    $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
 
-                //     $array['data'] = $completeMission;
-                // } else {
-                //     $array['error'] = 'Missão já completada';
-                //     return $array;
-                // }
+                    $array['data'] = $completeMission;
+                } else {
+                    $array['error'] = 'Missão já completada';
+                    return $array;
+                }
 
-                $array['data'] = $mis;
+                // $array['data'] = $com;
             }
         } else {
             $array['error'] = 'Missão não existente';
