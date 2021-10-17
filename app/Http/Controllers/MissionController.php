@@ -52,14 +52,16 @@ class MissionController extends Controller
          * */ 
 
         if($missionExists) {
-            $mission = InfoMission::select()->where(['id_user', $id_user, 'id_mission', $id])->get();
-            if($mission) {
-                $array['data'] = $mission;
-                return $array;
-            } else {
-                $array['error'] = "Essa info missão não existe";
-                return $array;
-            }
+            // $mission = InfoMission::select()->where(['id_user', $id_user, 'id_mission', $id])->get();
+            // if($mission) {
+            //     $array['data'] = $mission;
+            //     return $array;
+            // } else {
+            //     $array['error'] = "Essa info missão não existe";
+            //     return $array;
+            // }
+            $array['error'] = 'achouu';
+            return $array;
         } else {
             $array['error'] = "Essa missão não existe";
             return $array;
