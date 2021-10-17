@@ -44,8 +44,8 @@ class MissionController extends Controller
         
 
         /**
-         * verificar se a missao existe na tabela de missoes
-         * se existir a missao, entao verificar na tabela de info missao se ela ja foi criada/feita pelo usuario
+         * verificar se a missao existe na tabela de missoes -
+         * se existir a missao, entao verificar na tabela de info missao se ela ja foi criada/feita pelo usuario -
          * se nao existir na tabela de info missao, criar a missao la com suas respectivas informações
          * após isso, validar ela como feita/true
          * se a missao ja existir na tabela info missao, verificar se ela é true/false (feita ou nao)
@@ -54,14 +54,26 @@ class MissionController extends Controller
          * */ 
 
         if($missionExists === 1) {
-            // $mission = InfoMission::where(['id_user', $id_user, 'id_mission', $id])->count();
             $mission = DB::select('select * from infomissions
             where id_user = 1 and id_mission = 2');
+            
             if($mission) {
                 $array['data'] = $mission;
                 return $array;
             } else {
-                $array['error'] = "Essa info missão não existe";
+                $newInfoMission = new InfoMission();
+                $newInfoMission->id_user = $id_user;
+                $newInfoMission->id_mission = $id;
+                $newInfoMission->complete = false;
+                $newInfoMission->save();
+                // $array['error'] = "Essa info missão não existe";
+
+                InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
+                    ->update(['complete' => true]);
+
+                $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+
+                $array['data'] = $completeMission;
                 return $array;
             }
             $array['error'] = 'achouu';
