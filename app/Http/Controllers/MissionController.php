@@ -39,55 +39,26 @@ class MissionController extends Controller
         $array = ['error' => ''];
 
         $id_user = $this->loggedUser['id'];
-        $mission = Mission::select()->where('id', $id)->get();
+        $missionExists = Mission::select()->where('id', $id)->get();
 
-        if($mission) {
-            $mis = InfoMission::select("complete")->where(['id_user' => $id_user, 'id_mission' => $id])->get();
-            if($mis) {
-                if($mis === false) {
-                    InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
-                        ->update(['complete' => true]);
-            
-                    $award = Mission::select('award_value')->where('id', $id)->get();
-                    $gc = $award[0]{"award_value"};
+        /**
+         * verificar se a missao existe na tabela de missoes
+         * se existir a missao, entao verificar na tabela de info missao se ela ja foi criada/feita pelo usuario
+         * se nao existir na tabela de info missao, criar a missao la com suas respectivas informações
+         * após isso, validar ela como feita/true
+         * se a missao ja existir na tabela info missao, verificar se ela é true/false (feita ou nao)
+         * se ela ja for true/feita, informar o erro como "missao ja realizada"
+         * se ela for false/nao feita, validar como true/feita, adicionar os respectivos cvs e retornar isso ao usuario
+         * */ 
 
-                    $newGc = GreenCredit::find($this->loggedUser->id);
-                    $newGc->amountgc = $newGc->amountgc + $gc;
-                    $newGc->save();
-                
-                    $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
-
-                    $array['data'] = $completeMission;
-                } else if (!$mis) {
-                    $newMission = new InfoMission();
-                    $newMission->id_user = $id_user;
-                    $newMission->id_mission = $id;
-                    $newMission->complete = false;
-                    $newMission->save();
-
-                    InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
-                        ->update(['complete' => true]);
-                
-                    $award = Mission::select('award_value')->where('id', $id)->get();
-                    $gc = $award[0]{"award_value"};
-
-                    $newGc = GreenCredit::find($this->loggedUser->id);
-                    $newGc->amountgc = $newGc->amountgc + $gc;
-                    $newGc->save();
-                
-                    $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
-
-                    $array['data'] = $completeMission;
-                }
-            } else {
-                $array['error'] = 'Missão ja completada';
-                return $array;
-            }
+        if($missionExists) {
+            $mission = InfoMission::select('complete')->where(['id_user', $id_user, 'id_mission', $id])->get();
+            $array['data'] = $mission;
+            return $array;
         } else {
-            $array['error'] = 'Missão não existente';
+            $array['error'] = "Essa missão não existe";
             return $array;
         }
-
 
 
 
