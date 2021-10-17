@@ -39,7 +39,7 @@ class MissionController extends Controller
         $array = ['error' => ''];
 
         $id_user = $this->loggedUser['id'];
-        $missionExists = Mission::select('id')->where('id', $id)->get();
+        $missionExists = Mission::select()->where('id', $id)->get();
 
         /**
          * verificar se a missao existe na tabela de missoes
