@@ -55,7 +55,26 @@ class MissionController extends Controller
 
         if($missionExists === 1) {
             $mission = DB::select('select * from infomissions
-            where id_user = 1 and id_mission = 2');
+            where id_user ='.$id_user.' and id_mission ='.$id);
+
+
+            // switch ($mission) {
+            //     case $mission[0]{'complete'} === false:
+            //         InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
+            //             ->update(['complete' => true]);
+
+            //         $completMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+            //         $array['data'] = $completMission;
+            //         return $array;
+            //         break;
+            //     case $mission[0]{'complete'} === false:
+            //         echo "i equals 1";
+            //         break;
+            //     case 2:
+            //         echo "i equals 2";
+            //         break;
+            // }
+
             
             if($mission) {
                 if($mission[0]{'complete'} === false) {
