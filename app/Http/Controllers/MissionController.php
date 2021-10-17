@@ -53,8 +53,10 @@ class MissionController extends Controller
          * */ 
 
         if($missionExists === 1) {
-            $mission = InfoMission::where(['id_mission', $id])->count();
-            if($mission !== 0) {
+            // $mission = InfoMission::where(['id_user', $id_user, 'id_mission', $id])->count();
+            $mission = DB::select('select * from infomissions
+            where id_user = 1 and id_mission = 2');
+            if($mission) {
                 $array['data'] = $mission;
                 return $array;
             } else {
