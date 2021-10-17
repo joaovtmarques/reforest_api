@@ -43,7 +43,7 @@ class MissionController extends Controller
 
         if($mission) {
             $mis = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
-            if($mis) {
+            if(!$mis) {
                 if($mis["complete"] === false) {
                     InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
                         ->update(['complete' => true]);
