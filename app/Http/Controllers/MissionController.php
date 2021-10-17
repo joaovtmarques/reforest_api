@@ -83,10 +83,10 @@ class MissionController extends Controller
 
                 $array['data'] = $mis;
             }
-        } else {
-            $array['error'] = 'Missão não existente';
-            return $array;
-        }
+        // } else {
+        //     $array['error'] = 'Missão não existente';
+        //     return $array;
+        // }
 
 
 
