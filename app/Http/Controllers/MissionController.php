@@ -40,33 +40,33 @@ class MissionController extends Controller
 
         $mission = InfoMission::select()->where('id_mission', $id)->get();
 
-        if($mission) {
-            $id_user = $this->loggedUser['id'];
+        // if($mission) {
+        //     $id_user = $this->loggedUser['id'];
 
-            $mis = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+        //     $mis = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
             
-            if($mis[0]{"complete"} === 0) {
-                InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
-                    ->update(['complete' => 1]);
+        //     if($mis[0]{"complete"} === 0) {
+        //         InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
+        //             ->update(['complete' => 1]);
 
-                $award = Mission::select('award_value')->where('id', $id)->get();
-                $gc = $award[0]{"award_value"};
+        //         $award = Mission::select('award_value')->where('id', $id)->get();
+        //         $gc = $award[0]{"award_value"};
 
-                $newGc = GreenCredit::find($this->loggedUser->id);
-                $newGc->amountgc = $newGc->amountgc + $gc;
-                $newGc->save();
+        //         $newGc = GreenCredit::find($this->loggedUser->id);
+        //         $newGc->amountgc = $newGc->amountgc + $gc;
+        //         $newGc->save();
             
-                $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
+        //         $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
 
-                $array['data'] = $completeMission;
-            } else {
-                $array['error'] = 'Esta missão já está completa';
-                return $array;
-            }          
-        } else {
-            $array['error'] = 'Missão não completa';
-            return $array;
-        }
+        //         $array['data'] = $completeMission;
+        //     } else {
+        //         $array['error'] = 'Esta missão já está completa';
+        //         return $array;
+        //     }          
+        // } else {
+        //     $array['error'] = 'Missão não completa';
+        //     return $array;
+        // }
 
         return $mission;
     }
