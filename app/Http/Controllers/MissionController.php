@@ -39,7 +39,7 @@ class MissionController extends Controller
         $array = ['error' => ''];
 
         $id_user = $this->loggedUser['id'];
-        $missionExists = Mission::find('id', $id);
+        $missionExists = Mission::select('id')->where('id', $id)->get();
 
         /**
          * verificar se a missao existe na tabela de missoes
@@ -51,7 +51,7 @@ class MissionController extends Controller
          * se ela for false/nao feita, validar como true/feita, adicionar os respectivos cvs e retornar isso ao usuario
          * */ 
 
-        if(!$missionExists) {
+        if($missionExists) {
             // $mission = InfoMission::select()->where(['id_user', $id_user, 'id_mission', $id])->get();
             // if($mission) {
             //     $array['data'] = $mission;
@@ -61,7 +61,6 @@ class MissionController extends Controller
             //     return $array;
             // }
             $array['error'] = 'achouu';
-            return $array;
         } else {
             $array['error'] = "Essa missão não existe";
             return $array;
