@@ -51,7 +51,7 @@ class MissionController extends Controller
          * se ela for false/nao feita, validar como true/feita, adicionar os respectivos cvs e retornar isso ao usuario
          * */ 
 
-        if($missionExists) {
+        if(!$missionExists) {
             // $mission = InfoMission::select()->where(['id_user', $id_user, 'id_mission', $id])->get();
             // if($mission) {
             //     $array['data'] = $mission;
