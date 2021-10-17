@@ -57,25 +57,6 @@ class MissionController extends Controller
             $mission = DB::select('select * from infomissions
             where id_user ='.$id_user.' and id_mission ='.$id);
 
-
-            // switch ($mission) {
-            //     case $mission[0]{'complete'} === false:
-            //         InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
-            //             ->update(['complete' => true]);
-
-            //         $completMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
-            //         $array['data'] = $completMission;
-            //         return $array;
-            //         break;
-            //     case $mission[0]{'complete'} === false:
-            //         echo "i equals 1";
-            //         break;
-            //     case 2:
-            //         echo "i equals 2";
-            //         break;
-            // }
-
-            
             if($mission) {
                 $verfMission = $mission[0]->{"complete"};
 
@@ -117,38 +98,6 @@ class MissionController extends Controller
             $array['error'] = "Essa missão não existe";
             return $array;
         }
-
-
-
-        // $mission = InfoMission::select()->where('id_mission', $id)->get();
-
-        // if($mission) {
-        //     $id_user = $this->loggedUser['id'];
-
-        //     $mis = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
-            
-        //     if($mis[0]{"complete"} === false) {
-        //         InfoMission::where(['id_user' => $id_user, 'id_mission' => $id])
-        //             ->update(['complete' => true]);
-
-        //         $award = Mission::select('award_value')->where('id', $id)->get();
-        //         $gc = $award[0]{"award_value"};
-
-        //         $newGc = GreenCredit::find($this->loggedUser->id);
-        //         $newGc->amountgc = $newGc->amountgc + $gc;
-        //         $newGc->save();
-            
-        //         $completeMission = InfoMission::select()->where(['id_user' => $id_user, 'id_mission' => $id])->get();
-
-        //         $array['data'] = $completeMission;
-        //     } else {
-        //         $array['error'] = 'Esta missão já está completa';
-        //         return $array;
-        //     }          
-        // } else {
-        //     $array['error'] = 'Missão não completa';
-        //     return $array;
-        // }
 
         return $array;
     }

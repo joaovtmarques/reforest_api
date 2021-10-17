@@ -37,6 +37,9 @@ class PeopleController extends Controller
                 ->where('id_user', $id_people)
                 ->get();
             
+        } else {
+            $array['error'] = "Pessoa inexistente";
+            return $array;
         }
 
         $array['data'] = $peopleInfo;
