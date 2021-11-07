@@ -97,8 +97,8 @@ class AuthController extends Controller
         }
 
         $info = auth()->user();
-        $info['avatar'] = url('media/avatars/'.$info['avatar']);
-        $info['cover'] = url('media/covers/'.$info['cover']);
+        $info['avatar'] = url($info['avatar']);
+        $info['cover'] = url($info['cover']);
         $array['data'] = $info;
         $array['token'] = $token;
 
@@ -116,7 +116,7 @@ class AuthController extends Controller
         $token = auth()->refresh();
 
         $info = auth()->user();
-        $info['avatar'] = url('media/avatars/'.$info['avatar']);
+        $info['avatar'] = url($info['avatar']);
         $array['data'] = $info;
         $array['token'] = $token;
 
